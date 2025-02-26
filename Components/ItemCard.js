@@ -2,7 +2,6 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Innerlist from './Innerlist';
-import {useAxios} from '../utilities/useAxios';
 import CustomButton from './CustomButton';
 import {useHomeContext} from '../context/homeContext';
 
@@ -34,7 +33,7 @@ const ItemCard = (props = '') => {
                   onPress={() => goTop(index)}
                 />
               )}
-              <Text>{isUp ? 'A' : 'V'}</Text>
+              <Icon name={isUp ? 'up' : 'down'} />
             </View>
           </View>
         </View>

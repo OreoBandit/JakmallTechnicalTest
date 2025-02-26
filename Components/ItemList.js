@@ -35,6 +35,7 @@ const ItemList = () => {
         />
       )}
       {!loading && <CustomButton title="refresh" onPress={onRefresh} />}
+      <CustomDialog />
     </View>
   );
 };

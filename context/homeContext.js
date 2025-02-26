@@ -117,6 +117,7 @@ const HomeContextProvider = ({children}) => {
   };
 
   const openModal = (title = '') => {
+    console.log('cek hit');
     setModalContent(title);
     setModal(true);
   };
