@@ -15,7 +15,11 @@ To start the Metro dev server, run the following command from the root of your R
 
 
 
-https://github.com/user-attachments/assets/9c7e49db-3daf-4556-88c6-c7563d517374
+
+
+
+Uploading jakmall technical test demo.mp4…
+
 
 
 
