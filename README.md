@@ -4,8 +4,8 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 >
-APP IS TESTED AND WORKING ON ANDROID
-HAVEN'T TESTED IN IOS CAUSE NO XCODE :(
+APP IS TESTED AND WORKING ON ANDROID.
+I HAVEN'T TESTED IN IOS CAUSE NO XCODE :(
 
 ## Step 1: Start Metro
 
