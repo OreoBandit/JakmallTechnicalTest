@@ -1,6 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {useAxios} from '../utilities/useAxios';
-import Innerlist from '../Components/Innerlist';
 
 export const HomeContext = createContext(null);
 
@@ -118,13 +117,11 @@ const HomeContextProvider = ({children}) => {
   };
 
   const openModal = (title = '') => {
-    console.log('triggered open');
     setModalContent(title);
     setModal(true);
   };
 
   const closeModal = () => {
-    console.log('triggered close');
     setModal(false);
     setModalContent('');
   };

@@ -12,13 +12,11 @@ const ItemList = () => {
   const [loading, setLoading] = useState(true);
   const outerData = outerList?.data;
   const innerData = nestedList;
-  console.log('cek outerData', outerList?.data);
 
   useEffect(() => {
     if (outerData && innerData) {
       setLoading(false);
     }
-    console.log('cek datas', {outerData: outerData, innerData: innerData});
   }, [outerData, innerData]);
 
   const onRefresh = () => {

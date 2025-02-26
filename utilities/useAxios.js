@@ -5,6 +5,6 @@ export const useAxios = async url => {
     const response = await axios.get(url);
     return response;
   } catch (e) {
-    console.log('error fetching', e);
+    console.log('cek error fetching', e);
   }
 };

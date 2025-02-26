@@ -7,7 +7,6 @@ const InnerListContent = (data = {}) => {
   const {openModal} = useHomeContext();
   const jokeData = data?.data;
   const jokeContent = jokeData.item?.joke;
-  console.log('cek inner data', data);
   return (
     <TouchableOpacity
       style={styles.jokeContent}
