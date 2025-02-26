@@ -19,12 +19,10 @@ const InnerListContent = (data = {}) => {
 };
 
 const ListJokes = (props = '') => {
-  const [counter, setCounter] = useState(0);
   const {addData} = useHomeContext();
   const {data, index} = props;
 
   const handleAddData = () => {
-    setCounter(counter + 1);
     addData(data?.category, index);
   };
 
@@ -35,7 +33,7 @@ const ListJokes = (props = '') => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={item => <InnerListContent data={item} />}
       />
-      {counter < 2 && (
+      {data?.jokes?.length < 6 && (
         <CustomButton title={'add more data'} onPress={handleAddData} />
       )}
     </View>
