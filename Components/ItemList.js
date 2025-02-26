@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Modal} from 'react-native';
+import {View, Text, FlatList, Modal, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ItemCard from './ItemCard';
 import {useHomeContext} from '../context/homeContext';
@@ -8,7 +8,7 @@ import CustomDialog from './CustomDialog';
 import CustomButton from './CustomButton';
 
 const ItemList = () => {
-  const {outerList, nestedList} = useHomeContext();
+  const {outerList, nestedList, refreshData} = useHomeContext();
   const [loading, setLoading] = useState(true);
   const outerData = outerList?.data;
   const innerData = nestedList;
@@ -21,9 +21,13 @@ const ItemList = () => {
     console.log('cek datas', {outerData: outerData, innerData: innerData});
   }, [outerData, innerData]);
 
+  const onRefresh = () => {
+    setLoading(true);
+    refreshData();
+  };
+
   return (
-    <View
-      style={{flex: 1, width: '100%', padding: 10, backgroundColor: 'white'}}>
+    <View style={styles.container}>
       {loading ? (
         <LoadingComponent />
       ) : (
@@ -32,10 +36,18 @@ const ItemList = () => {
           renderItem={item => <ItemCard categories={item} />}
         />
       )}
-      <CustomButton title="refresh" />
-      <CustomDialog />
+      {!loading && <CustomButton title="refresh" onPress={onRefresh} />}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    padding: 10,
+    backgroundColor: 'white',
+  },
+});
 
 export default ItemList;

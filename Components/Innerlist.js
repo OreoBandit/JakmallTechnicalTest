@@ -20,15 +20,24 @@ const InnerListContent = (data = {}) => {
 };
 
 const ListJokes = (props = '') => {
-  const {data} = props;
-  console.log('cek jokes', data);
+  const [counter, setCounter] = useState(0);
+  const {addData} = useHomeContext();
+  const {data, index} = props;
+
+  const handleAddData = () => {
+    setCounter(counter + 1);
+    addData(data?.category, index);
+  };
+
   return (
     <View>
       <FlatList
         data={data?.jokes}
         renderItem={item => <InnerListContent data={item} />}
       />
-      <CustomButton title={'Add More Data'} />
+      {counter < 2 && (
+        <CustomButton title={'add more data'} onPress={handleAddData} />
+      )}
     </View>
   );
 };
@@ -40,12 +49,11 @@ const EmptyJokes = () => {
 const Innerlist = (props = '') => {
   const {index} = props;
   const {nestedList} = useHomeContext();
-  console.log('cek nested list', nestedList[index]?.jokes);
 
   return (
     <View style={styles.container}>
       {nestedList[index]?.jokes.length > 0 ? (
-        <ListJokes data={nestedList[index]} />
+        <ListJokes data={nestedList[index]} index={index} />
       ) : (
         <EmptyJokes />
       )}

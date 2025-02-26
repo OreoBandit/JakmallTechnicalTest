@@ -26,7 +26,14 @@ const ItemCard = (props = '') => {
               <Text style={style.textBtn}>{name}</Text>
             </View>
             <View style={style.btnSection}>
-              <CustomButton title={'GO TO TOP'} onPress={() => goTop(index)} />
+              {index === 0 ? (
+                <Text style={style.topText}>TOP</Text>
+              ) : (
+                <CustomButton
+                  title={'GO TO TOP'}
+                  onPress={() => goTop(index)}
+                />
+              )}
               <Text>{isUp ? 'A' : 'V'}</Text>
             </View>
           </View>

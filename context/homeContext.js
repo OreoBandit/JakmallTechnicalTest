@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {useAxios} from '../utilities/useAxios';
+import Innerlist from '../Components/Innerlist';
 
 export const HomeContext = createContext(null);
 
@@ -11,9 +12,7 @@ const HomeContextProvider = ({children}) => {
   const [modalContent, setModalContent] = useState('');
   const [changePosition, setChangePosition] = useState(false);
 
-  const outerListViewURL = 'https://v2.jokeapi.dev/categories';
   useEffect(() => {
-    console.log('cek ', changePosition);
     if (!changePosition) fetchDataOuter();
   }, []);
 
@@ -23,11 +22,27 @@ const HomeContextProvider = ({children}) => {
     }
   }, [dataOuter]);
 
-  const fetchDataOuter = async () => {
-    const data1 = await useAxios(outerListViewURL);
+  useEffect(() => {
+    resetData();
+    fetchDataOuter();
+    if (dataOuter) {
+      fetchDataInner();
+      setRefresh(false);
+    }
+  }, [refresh]);
 
+  const resetData = () => {
+    setDataOuter('');
+    setDataInner('');
+  };
+
+  const refreshData = () => {
+    setRefresh(true);
+  };
+
+  const fetchDataOuter = async () => {
+    const data1 = await useAxios('https://v2.jokeapi.dev/categories');
     if (data1) setDataOuter(data1);
-    console.log('cek fetch 1', data1);
   };
 
   const fetchDataInner = async () => {
@@ -51,13 +66,12 @@ const HomeContextProvider = ({children}) => {
     }
   };
 
-  const goTop = (index = 0) => {
+  const arrangeOuterData = index => {
     setDataOuter(prevState => {
       if (!prevState?.data?.categories) return prevState;
       const newCategories = [...prevState.data.categories];
       const selectedItem = newCategories.splice(index, 1)[0];
       newCategories.unshift(selectedItem);
-      console.log('new cat', newCategories);
       return {
         ...prevState,
         data: {
@@ -66,15 +80,40 @@ const HomeContextProvider = ({children}) => {
         },
       };
     });
+  };
 
+  const arrangeInnerData = index => {
     setDataInner(prevState => {
       if (!prevState) return prevState;
 
       const newData = [...prevState];
       const selectedItem = newData.splice(index, 1)[0];
       newData.unshift(selectedItem);
-      console.log('new inner data', newData);
       return newData;
+    });
+  };
+
+  const goTop = (index = 0) => {
+    arrangeOuterData(index);
+    arrangeInnerData(index);
+  };
+
+  const addData = async (category = '', index = 0) => {
+    const res = await useAxios(
+      `https://v2.jokeapi.dev/joke/${category}?type=single&amount=2`,
+    );
+    const newJoke = res?.data?.jokes;
+
+    setDataInner(prevState => {
+      const updatedData = [...prevState];
+      if (updatedData[index]) {
+        updatedData[index] = {
+          ...updatedData[index],
+          jokes: [...updatedData[index].jokes, ...newJoke],
+        };
+      }
+
+      return updatedData;
     });
   };
 
@@ -100,6 +139,8 @@ const HomeContextProvider = ({children}) => {
         modal,
         modalContent,
         goTop,
+        refreshData,
+        addData,
       }}>
       {children}
     </HomeContext.Provider>
