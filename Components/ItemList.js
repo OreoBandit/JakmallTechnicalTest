@@ -2,7 +2,7 @@ import {View, Text, FlatList, Modal, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ItemCard from './ItemCard';
 import {useHomeContext} from '../context/homeContext';
-import {useAxios} from '../utilities/useAxios';
+import {fetchAxios} from '../utilities/fetchAxios';
 import LoadingComponent from './LoadingComponent';
 import CustomDialog from './CustomDialog';
 import CustomButton from './CustomButton';

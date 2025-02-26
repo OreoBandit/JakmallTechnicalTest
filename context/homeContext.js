@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {useAxios} from '../utilities/useAxios';
+import {fetchAxios} from '../utilities/fetchAxios';
 
 export const HomeContext = createContext(null);
 
@@ -26,13 +26,12 @@ const HomeContextProvider = ({children}) => {
     fetchDataOuter();
     if (dataOuter) {
       fetchDataInner();
-      setRefresh(false);
     }
   }, [refresh]);
 
   const resetData = () => {
-    setDataOuter('');
-    setDataInner('');
+    setDataOuter(null);
+    setDataInner(null);
   };
 
   const refreshData = () => {
@@ -40,7 +39,7 @@ const HomeContextProvider = ({children}) => {
   };
 
   const fetchDataOuter = async () => {
-    const data1 = await useAxios('https://v2.jokeapi.dev/categories');
+    const data1 = await fetchAxios('https://v2.jokeapi.dev/categories');
     if (data1) setDataOuter(data1);
   };
 
@@ -50,7 +49,7 @@ const HomeContextProvider = ({children}) => {
       try {
         const responses = await Promise.all(
           category.map(async cat => {
-            const data = await useAxios(
+            const data = await fetchAxios(
               `https://v2.jokeapi.dev/joke/${cat}?type=single&amount=2`,
             );
             return {
@@ -61,6 +60,7 @@ const HomeContextProvider = ({children}) => {
         );
         setDataInner(responses);
         setChangePosition(true);
+        setRefresh(false);
       } catch (e) {}
     }
   };
@@ -98,7 +98,7 @@ const HomeContextProvider = ({children}) => {
   };
 
   const addData = async (category = '', index = 0) => {
-    const res = await useAxios(
+    const res = await fetchAxios(
       `https://v2.jokeapi.dev/joke/${category}?type=single&amount=2`,
     );
     const newJoke = res?.data?.jokes;
@@ -117,7 +117,6 @@ const HomeContextProvider = ({children}) => {
   };
 
   const openModal = (title = '') => {
-    console.log('cek hit');
     setModalContent(title);
     setModal(true);
   };
