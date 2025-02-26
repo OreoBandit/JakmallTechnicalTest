@@ -13,6 +13,12 @@ First, you will need to run **Metro**, the JavaScript build tool for React Nativ
 
 To start the Metro dev server, run the following command from the root of your React Native project:
 
+
+
+https://github.com/user-attachments/assets/9c7e49db-3daf-4556-88c6-c7563d517374
+
+
+
 ```sh
 # Using npm
 npm start
