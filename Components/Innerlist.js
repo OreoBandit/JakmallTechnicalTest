@@ -32,6 +32,7 @@ const ListJokes = (props = '') => {
     <View>
       <FlatList
         data={data?.jokes}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={item => <InnerListContent data={item} />}
       />
       {counter < 2 && (
