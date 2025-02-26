@@ -4,23 +4,13 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Innerlist from './Innerlist';
 import {useAxios} from '../utilities/useAxios';
 import CustomButton from './CustomButton';
+import {useHomeContext} from '../context/homeContext';
 
-const ItemCard = (props = {}) => {
-  const {name = props?.categories?.item, index = props?.categories?.index} =
-    props;
-
+const ItemCard = (props = '') => {
+  const {goTop} = useHomeContext();
   const [isUp, setIsUp] = useState(false);
-  const [innerData, setInnerData] = useState(null);
-
-  useEffect(() => {
-    const nestedListViewURL = `https://v2.jokeapi.dev/joke/${name}?type=single&amount=2`;
-    const fetchedData = async () => {
-      const data = await useAxios(nestedListViewURL);
-      setInnerData(data);
-    };
-
-    fetchedData();
-  }, [name]);
+  const {index = props?.categories?.index, name = props?.categories?.item} =
+    props;
 
   const togglePress = () => {
     setIsUp(isUp => !isUp);
@@ -36,13 +26,13 @@ const ItemCard = (props = {}) => {
               <Text style={style.textBtn}>{name}</Text>
             </View>
             <View style={style.btnSection}>
-              <CustomButton title={'GO TO TOP'} onPress={{}} />
+              <CustomButton title={'GO TO TOP'} onPress={() => goTop(index)} />
               <Text>{isUp ? 'A' : 'V'}</Text>
             </View>
           </View>
         </View>
       </TouchableOpacity>
-      {isUp && <Innerlist data={innerData?.data} />}
+      {isUp && <Innerlist index={index} />}
     </View>
   );
 };

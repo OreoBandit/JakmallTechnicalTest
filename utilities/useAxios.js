@@ -1,4 +1,3 @@
-import {useEffect} from 'react';
 import axios from 'react-native-axios';
 
 export const useAxios = async url => {

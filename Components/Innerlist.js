@@ -2,12 +2,12 @@ import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {use, useEffect, useState} from 'react';
 import CustomButton from './CustomButton';
 import {useHomeContext} from '../context/homeContext';
-import {useAxios} from '../utilities/useAxios';
 
 const InnerListContent = (data = {}) => {
   const {openModal} = useHomeContext();
   const jokeData = data?.data;
   const jokeContent = jokeData.item?.joke;
+  console.log('cek inner data', data);
   return (
     <TouchableOpacity
       style={styles.jokeContent}
@@ -19,14 +19,13 @@ const InnerListContent = (data = {}) => {
   );
 };
 
-const ListJokes = (jokes = '') => {
-  console.log('cek jokes 3', jokes);
-  const data = jokes?.jokes;
-
+const ListJokes = (props = '') => {
+  const {data} = props;
+  console.log('cek jokes', data);
   return (
     <View>
       <FlatList
-        data={data}
+        data={data?.jokes}
         renderItem={item => <InnerListContent data={item} />}
       />
       <CustomButton title={'Add More Data'} />
@@ -39,13 +38,17 @@ const EmptyJokes = () => {
 };
 
 const Innerlist = (props = '') => {
-  const {data} = props;
-  const jokes = data?.jokes;
+  const {index} = props;
+  const {nestedList} = useHomeContext();
+  console.log('cek nested list', nestedList[index]?.jokes);
 
-  console.log('cek inner data', jokes);
   return (
     <View style={styles.container}>
-      {jokes ? <ListJokes jokes={jokes} /> : <EmptyJokes />}
+      {nestedList[index]?.jokes.length > 0 ? (
+        <ListJokes data={nestedList[index]} />
+      ) : (
+        <EmptyJokes />
+      )}
     </View>
   );
 };

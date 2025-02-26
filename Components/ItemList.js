@@ -5,29 +5,21 @@ import {useHomeContext} from '../context/homeContext';
 import {useAxios} from '../utilities/useAxios';
 import LoadingComponent from './LoadingComponent';
 import CustomDialog from './CustomDialog';
-
-const ItemContent = props => {
-  return (
-    <View>
-      <FlatList
-        data={outerData?.categories}
-        renderItem={item => <ItemCard categories={item} />}
-      />
-    </View>
-  );
-};
+import CustomButton from './CustomButton';
 
 const ItemList = () => {
-  const {outerList} = useHomeContext();
+  const {outerList, nestedList} = useHomeContext();
   const [loading, setLoading] = useState(true);
   const outerData = outerList?.data;
+  const innerData = nestedList;
   console.log('cek outerData', outerList?.data);
 
   useEffect(() => {
-    if (outerData) {
+    if (outerData && innerData) {
       setLoading(false);
     }
-  }, [outerData]);
+    console.log('cek datas', {outerData: outerData, innerData: innerData});
+  }, [outerData, innerData]);
 
   return (
     <View
@@ -40,7 +32,8 @@ const ItemList = () => {
           renderItem={item => <ItemCard categories={item} />}
         />
       )}
-      <CustomDialog/>
+      <CustomButton title="refresh" />
+      <CustomDialog />
     </View>
   );
 };
