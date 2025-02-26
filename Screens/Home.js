@@ -1,32 +1,39 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, { useEffect } from 'react';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import HomeContextProvider, {useHomeContext} from '../context/homeContext';
+import ItemList from '../Components/ItemList';
 
 const HomeContent = () => {
-  const context = useHomeContext();
-  console.log('cek context', context);
   return (
-    <View>
-      <Text>ahdasd</Text>
+    <View style={styles.containerView}>
+      <Text style={styles.text}>Technical Test Jakmall.com</Text>
+      <Text style={styles.name}>Muhammad Brahmantyo Oktaviga</Text>
+      <ItemList />
     </View>
   );
 };
 
 const Home = () => {
-
-    
   return (
     <HomeContextProvider>
       <HomeContent />
     </HomeContextProvider>
-    // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    //   <Text style={styles.text}>Ini Homescreen</Text>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
+  containerView: {
+    flex: 1,
+    alignItems: 'center',
+  },
   text: {
+    padding: 16,
+    fontSize: 16,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  name: {
+    // padding: 16,
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
